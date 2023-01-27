@@ -210,7 +210,7 @@ jobs:
           name: Configure server
           command: |
             # Your code here
-            cat ~/inventory.txt
+            cat .circleci/ansible/inventory.txt
             cd .circleci/ansible
             ansible-playbook -i ~/inventory.txt configure-server.yml
             # exit 1
