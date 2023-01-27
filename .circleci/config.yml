@@ -201,9 +201,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-          apk add --update ansible 
-          apk add --no-cache aws-cli
-          apk add --update tar gzip
+            apk add --update ansible 
+            apk add --no-cache aws-cli
+            apk add --update tar gzip
       - run:
           name: Configure server
           command: |
