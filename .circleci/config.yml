@@ -231,6 +231,12 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
+          name: Install dependencies
+          command: |
+            apk add --update npm ansible nodejs 
+            apk add --no-cache aws-cli
+            apk add --update tar gzip
+      - run:
           name: Run migrations
           command: |
             # Your code here
