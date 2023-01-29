@@ -250,7 +250,7 @@ jobs:
               npm run migrations > migrations_dump.txt
               cat migrations_dump.txt
               # cat /root/.npm/eresolve-report.txt
-            # exit 1
+            # exit 1s
       # - run:
       #     name: Send migration results to memstash
       #     command: |
