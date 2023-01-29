@@ -243,6 +243,7 @@ jobs:
               cd backend
               npm install
               npm audit fix
+              npm cache clean --force
               # npm audit fix --force
               # npm audit fix --force
               # cat /root/.npm/eresolve-report.txt
