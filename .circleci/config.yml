@@ -243,7 +243,7 @@ jobs:
               cd backend
               npm install
               npm audit fix
-              npm audit fix --force
+              # npm audit fix --force
               # npm audit fix --force
               # cat /root/.npm/eresolve-report.txt
               # Run and save the migration output
