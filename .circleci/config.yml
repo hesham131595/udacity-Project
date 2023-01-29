@@ -240,7 +240,7 @@ jobs:
           name: Run migrations
           command: |
             # # Your code here
-            #   cd backend
+              cd backend
             #   npm install
             #   npm audit fix
             #   npm cache clean --force
