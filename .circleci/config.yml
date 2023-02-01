@@ -189,7 +189,7 @@ jobs:
           root: ~/
           paths:
             - inventory.txt
-      Here's where you will add some code to rollback on failure     mm 
+      # Here's where you will add some code to rollback on failure     mm 
 
   configure-infrastructure:
     docker:
