@@ -1,6 +1,6 @@
 ---
 - name: "extract artifact"
-    shell: |
+  shell: |
       tar -xvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}.tar.gz .
       npm install
       pm2 stop default
