@@ -2,7 +2,7 @@
 - name: "extract artifact"
   shell: |
     mkdir /home/ubuntu/backend
-    tar -xvf artifact.tar.gz /home/ubuntu/backend
+    tar -xvf ~/project/artifact.tar.gz /home/ubuntu/backend
     cd /home/ubuntu/backend
     npm install
     pm2 stop default
