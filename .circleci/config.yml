@@ -268,6 +268,7 @@ jobs:
                     # curl -H "Content-Type: text/plain" -H "token: 7933fe63-4687-4fa1-8426-aa25aa1730ec" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
                     # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first
                     curl https://kvdb.io/Sg5a76d6W124SYxaE5H6v/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+                    # curl https://kvdb.io/Sg5a76d6W124SYxaE5H6v/migration_${CIRCLE_WORKFLOW_ID:0:7}
                 fi
             # exit 1
       # - persist_to_workspace:
@@ -325,8 +326,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - attach_workspace:
-            at: ~/
+      # - attach_workspace:
+      #       at: ~/
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints: ["10:51:76:7d:7f:bb:ad:23:3e:2f:55:99:97:44:6d:d8"]
@@ -440,7 +441,7 @@ workflows:
       - deploy-frontend:
           requires: [run-migrations]
       - deploy-backend:
-          requires: [run-migrations]
+          requires: [run-migrations,deploy-infrastructure]
       # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
