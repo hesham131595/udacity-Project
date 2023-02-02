@@ -280,8 +280,7 @@ jobs:
     docker:
       # Docker image here that supports AWS CLI
       - image: python:3.9-alpine3.16
-    - attach_workspace:
-            at: ~/
+  
     steps:
       # Checkout code from git
       - checkout
