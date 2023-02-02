@@ -291,7 +291,8 @@ jobs:
           command: |
             # your code here
             apk add --update ansible 
-            apk add --no-cache aws-cli
+            # apk add --no-cache aws-cli
+            pip3 install awscli 
             apk add --update tar gzip
             apk add --update nodejs npm
       - run:
