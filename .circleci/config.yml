@@ -318,42 +318,42 @@ jobs:
             aws s3 cp dist s3://udapeople-0837f52 --recursive
       # Here's where you will add some code to rollback on failure      
                     
-  # deploy-backend:
-  #   docker:
-  #     # Docker image here that supports Ansible
-  #     - image: python:3.9-alpine3.16
-  #   steps:
-  #     # Checkout code from git
-  #     - checkout
-  #     # Add ssh keys with fingerprint
-  #      - add_ssh_keys:
-  #         fingerprints: ["10:51:76:7d:7f:bb:ad:23:3e:2f:55:99:97:44:6d:d8"]
-  #     # attach workspace
-  #     - attach_workspace:
-  #           at: ~/
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           # your code here
-  #            apk add --update ansible 
-  #           # apk add --no-cache aws-cli
-  #           pip3 install awscli 
-  #           apk add --update tar gzip
-  #           apk add --update nodejs npm
-  #     - run:
-  #         name: Deploy backend
-  #         command: |
-  #           # your code here
-  #           cd backend
-  #           npm i
-  #           npm run build
-  #           cd ..
-  #           tar -C backend -czvf artifact.tar.gz .
-  #           cd .circleci/ansible
-  #           echo "Contents  of the inventory.txt file is -------"
-  #           cat ~/inventory.txt
-  #           ansible-playbook -i inventory.txt deploy-backend.yml
-  #     Here's where you will add some code to rollback on failure  
+  deploy-backend:
+    docker:
+      # Docker image here that supports Ansible
+      - image: python:3.9-alpine3.16
+    steps:
+      # Checkout code from git
+      - checkout
+      # Add ssh keys with fingerprint
+       - add_ssh_keys:
+          fingerprints: ["10:51:76:7d:7f:bb:ad:23:3e:2f:55:99:97:44:6d:d8"]
+      # attach workspace
+      - attach_workspace:
+            at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+             apk add --update ansible 
+            # apk add --no-cache aws-cli
+            pip3 install awscli 
+            apk add --update tar gzip
+            apk add --update nodejs npm
+      - run:
+          name: Deploy backend
+          command: |
+            # your code here
+            cd backend
+            npm i
+            npm run build
+            cd ..
+            tar -C backend -czvf artifact.tar.gz .
+            cd .circleci/ansible
+            echo "Contents  of the inventory.txt file is -------"
+            cat ~/inventory.txt
+            ansible-playbook -i ~/inventory.txt deploy-backend.yml
+      Here's where you will add some code to rollback on failure  
 
 #   smoke-test:
 #     docker:
@@ -437,8 +437,8 @@ workflows:
           requires: [build-backend]
       - deploy-frontend:
           requires: [run-migrations]
-      # - deploy-backend:
-      #     requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
       # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
