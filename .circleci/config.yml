@@ -372,7 +372,7 @@ jobs:
             # apk add --no-cache aws-cli
             pip3 install awscli 
             apk add --update tar gzip
-            apk add --update nodejs npm
+            apk add --update nodejs npm curl
       - run:
           name: Get backend url
           command: |
