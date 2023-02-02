@@ -220,10 +220,10 @@ jobs:
             ansible-playbook -i ~/inventory.txt configure-server.yml
             # exit 1
       # Here's where you will add some code to rollback on failure      
-      # - persist_to_workspace:
-      #     root: ~/
-      #     paths:
-      #       - inventory.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - inventory.txt
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
