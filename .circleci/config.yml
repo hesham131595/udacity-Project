@@ -284,8 +284,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - attach_workspace:
-            at: ~/
+      # - attach_workspace:
+      #       at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -325,6 +325,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - attach_workspace:
+            at: ~/
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints: ["10:51:76:7d:7f:bb:ad:23:3e:2f:55:99:97:44:6d:d8"]
@@ -351,9 +353,8 @@ jobs:
             tar -C backend -czvf artifact.tar.gz .
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inv.txt
-            cat inv.txt
-            ansible-playbook -i inv.txt deploy-backend.yml
+            cat inventory.txt
+            ansible-playbook -i ~/inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
 
 #   smoke-test:
