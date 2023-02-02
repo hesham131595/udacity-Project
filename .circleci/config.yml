@@ -228,11 +228,12 @@ jobs:
     docker:
       # Docker image here that supports NodeJS
       - image: circleci/node:13.8.0
-    - attach_workspace:
-            at: ~/
+
     steps:
       # Checkout code from git
       - checkout
+      - attach_workspace:
+        at: ~/
       - restore_cache:
           keys: [backend-build1]
       # - run:
