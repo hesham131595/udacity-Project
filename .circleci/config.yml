@@ -285,14 +285,14 @@ jobs:
           command: |
             apk add --update npm ansible nodejs 
             apk add --no-cache aws-cli
-            apk add --update tar gzip
+            apk add --update tar gzip curl
       - run:
           name: Run migrations
           command: |
             # # Your code here
               cd backend
               npm install
-            #   npm audit fix
+              npm audit fix
             #   npm cache clean --force
               # npm audit fix --force
               # npm audit fix --force
@@ -525,31 +525,31 @@ workflows:
       - build-frontend:
           filters:
             branches:
-              only: dev-branch
+              only: [dev-branch, master]
       - build-backend:
           filters:
             branches:
-              only: dev-branch
+              only: [dev-branch, master]
       - test-frontend:
           requires: [build-frontend]
           filters:
             branches:
-              only: dev-branch
+              only: [dev-branch, master]
       - test-backend:
           requires: [build-backend]
           filters:
             branches:
-              only: dev-branch
+              only: [dev-branch, master]
       - scan-backend:
           requires: [build-backend]
           filters:
             branches:
-              only: dev-branch
+              only: [dev-branch, master]
       - scan-frontend:
           requires: [build-frontend]
           filters:
             branches:
-              only: dev-branch
+              only: [dev-branch, master]
     # context: development-context
     # triggers:
     #   - branch: devvsasaas
