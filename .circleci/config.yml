@@ -563,8 +563,8 @@ workflows:
           requires: [run-migrations] 
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-    triggers:
-      - branch: master  
+    # triggers:
+    #   - branch: master  
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
