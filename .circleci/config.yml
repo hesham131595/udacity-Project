@@ -547,7 +547,7 @@ workflows:
               only: dev-branch
       - scan-frontend:
           requires: [build-frontend]
-           filters:
+          filters:
             branches:
               only: dev-branch
     # triggers:
