@@ -522,11 +522,11 @@ workflows:
   development_workflow:
     jobs:
       - build-frontend:
-      - build-backend:
           filters:
             branches:
               only: dev-branch
       - build-backend:
+          requires: [build-frontend]
           filters:
             branches:
               only: dev-branch
@@ -547,6 +547,9 @@ workflows:
               only: dev-branch
       - scan-frontend:
           requires: [build-frontend]
+           filters:
+            branches:
+              only: dev-branch
     # triggers:
     #   - branch: dev
   deploy_workflow:
