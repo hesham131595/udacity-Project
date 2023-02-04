@@ -555,12 +555,10 @@ workflows:
   deploy_workflow:
     jobs:
       - deploy-infrastructure:
-          requires: 
-            - context: development-context
-              filter:
-                success: true
-            - filters:
-                branches:
+          requires: development-context
+          filters:
+              success: true
+              branches:
                    only: master
       - configure-infrastructure:
           requires: [deploy-infrastructure]
