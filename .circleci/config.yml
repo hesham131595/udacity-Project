@@ -549,13 +549,15 @@ workflows:
           filters:
             branches:
               only: dev-branch
+    context: development-context
     # triggers:
     #   - branch: devvsasaas
   deploy_workflow:
     jobs:
       - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          requires: development-context
           filters:
+            success: true
             branches:
               only: master
       - configure-infrastructure:
