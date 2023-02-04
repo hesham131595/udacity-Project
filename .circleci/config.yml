@@ -197,7 +197,7 @@ jobs:
       - run: 
           name: ensure env
           command: |
-              echo $TYPEORM_ENTITIES
+              echo "TYPEORM_ENTITIES: $TYPEORM_ENTITIES"
       # - run:
       #     name: Ensure back-end infrastructure exists
       #     command: |
