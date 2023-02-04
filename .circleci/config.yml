@@ -522,17 +522,33 @@ workflows:
   development_workflow:
     jobs:
       - build-frontend:
+          filters:
+            branches:
+              only: dev
       - build-backend:
+          filters:
+            branches:
+              only: dev
       - test-frontend:
           requires: [build-frontend]
+          filters:
+            branches:
+              only: dev
       - test-backend:
           requires: [build-backend]
+          filters:
+            branches:
+              only: dev
       - scan-backend:
           requires: [build-backend]
+          filters:
+            branches:
+              only: dev
       - scan-frontend:
           requires: [build-frontend]
-    triggers:
-      - branch: dev
+          filters:
+            branches:
+              only: dev
   deploy_workflow:
     jobs:
       - deploy-infrastructure:
