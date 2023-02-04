@@ -445,7 +445,7 @@ jobs:
             # apk add --no-cache aws-cli
             pip3 install awscli 
             apk add --update tar gzip
-            apk add --update nodejs npm curl
+            apk add --update nodejs npm curl 
       # - run:
       #     name: Get backend url
       #     command: |
@@ -479,10 +479,10 @@ jobs:
                 return 1
               fi
       # Here's where you will add some code to rollback on failure  
-      - destroy-environment:
-          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
-          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      # - destroy-environment:
+      #     workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      # - revert-migrations:
+      #     workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 #   cloudfront-update:
 #     docker:
 #       # Docker image here that supports AWS CLI
