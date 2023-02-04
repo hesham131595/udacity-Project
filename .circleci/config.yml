@@ -524,31 +524,31 @@ workflows:
       - build-frontend:
           filters:
             branches:
-              only: [dev-branch, master]
+              only: dev-branch
       - build-backend:
           filters:
             branches:
-              only: [dev-branch, master]
+              only: dev-branch
       - test-frontend:
           requires: [build-frontend]
           filters:
             branches:
-              only: [dev-branch, master]
+              only: dev-branch
       - test-backend:
           requires: [build-backend]
           filters:
             branches:
-              only: [dev-branch, master]
+              only: dev-branch
       - scan-backend:
           requires: [build-backend]
           filters:
             branches:
-              only: [dev-branch, master]
+              only: dev-branch
       - scan-frontend:
           requires: [build-frontend]
           filters:
             branches:
-              only: [dev-branch, master]
+              only: dev-branch
     # context: development-context
     # triggers:
     #   - branch: devvsasaas
