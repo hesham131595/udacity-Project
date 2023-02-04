@@ -560,7 +560,6 @@ workflows:
           filters:
               branches:
                    only: master
-              success: true
       - configure-infrastructure:
           requires: [deploy-infrastructure]
           filters:
