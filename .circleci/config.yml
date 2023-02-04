@@ -526,7 +526,6 @@ workflows:
             branches:
               only: dev-branch
       - build-backend:
-          requires: [build-frontend]
           filters:
             branches:
               only: dev-branch
@@ -551,7 +550,7 @@ workflows:
             branches:
               only: dev-branch
     # triggers:
-    #   - branch: dev
+    #   - branch: devvsasa
   deploy_workflow:
     jobs:
       - deploy-infrastructure:
