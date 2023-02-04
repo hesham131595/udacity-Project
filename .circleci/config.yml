@@ -547,20 +547,11 @@ workflows:
               only: dev-branch
       - scan-frontend:
           requires: [build-frontend]
-<<<<<<< HEAD
-    triggers:
-      - branch: dev
-  deploy_workflow:
-    jobs:
-      - deploy-infrastructure:
-=======
-          filters:
-            branches:
-              only: dev-branch
+    # triggers:
+    #   - branch: dev
   deploy_workflow:
     jobs:
       - deploy-infrastructure
->>>>>>> dev
           # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
@@ -572,13 +563,8 @@ workflows:
           requires: [run-migrations] 
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-<<<<<<< HEAD
-    triggers:
-      - branch: master  
-=======
     # triggers:
     #   - branch: master  
->>>>>>> dev
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
