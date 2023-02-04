@@ -555,8 +555,6 @@ workflows:
   deploy_workflow:
     jobs:
       - deploy-infrastructure:
-          requires: 
-            - development-context
           filters:
               branches:
                    only: master
