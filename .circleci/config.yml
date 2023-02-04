@@ -588,7 +588,7 @@ workflows:
       #     filters:
       #       branches:
       #         only: master
-    # triggers:
+    # triggers:as
     #   - branch: master  
       # - cloudfront-update:
       #     requires: [smoke-test]
