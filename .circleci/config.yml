@@ -194,44 +194,48 @@ jobs:
       # Checkout code from gitaa
       - checkout
       - run: yum install -y tar gzip
-      - run:
-          name: Ensure back-end infrastructure exists
+      - run: 
+          name: ensure env
           command: |
-            echo $TYPEORM_ENTITIES
-            aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
-              --tags project=udapeople \
-              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-              # exit 1
-      - run:
-          name: Ensure front-end infrastructure exist
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
-              --tags project=udapeople \
-              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-            # aws cloudformation describe-stack-events --stack-name udapeople-frontend-0c9652d
-              # exit 1
-      - run:
-          name: Add back-end ip to ansible inventory
-          command: |
-            # Your code here
-            # aws ec2 describe-instances \
-            # --instance-ids i-0c9c9b44b \
-            # --query 'Reservations[*].Instances[*].PublicIpAddress' --output text > ~/inventory.txt
-            echo [web] > ~/inventory.txt
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> ~/inventory.txt
-            # exit 1
-            cat ~/inventory.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - inventory.txt
-      # Here's where you will add some code to rollback on failure     mm 
-      - destroy-environment:
-          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+              echo $TYPEORM_ENTITIES
+      # - run:
+      #     name: Ensure back-end infrastructure exists
+      #     command: |
+      #       echo $TYPEORM_ENTITIES
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/files/backend.yml \
+      #         --tags project=udapeople \
+      #         --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+      #         --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+      #         # exit 1
+      # - run:
+      #     name: Ensure front-end infrastructure exist
+      #     command: |
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/files/frontend.yml \
+      #         --tags project=udapeople \
+      #         --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+      #         --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+      #       # aws cloudformation describe-stack-events --stack-name udapeople-frontend-0c9652d
+      #         # exit 1
+      # - run:
+      #     name: Add back-end ip to ansible inventory
+      #     command: |
+      #       # Your code here
+      #       # aws ec2 describe-instances \
+      #       # --instance-ids i-0c9c9b44b \
+      #       # --query 'Reservations[*].Instances[*].PublicIpAddress' --output text > ~/inventory.txt
+      #       echo [web] > ~/inventory.txt
+      #       aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> ~/inventory.txt
+      #       # exit 1
+      #       cat ~/inventory.txt
+      # - persist_to_workspace:
+      #     root: ~/
+      #     paths:
+      #       - inventory.txt
+      # # Here's where you will add some code to rollback on failure     mm 
+      # - destroy-environment:
+      #     workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
      
   configure-infrastructure:
     docker:
@@ -559,31 +563,31 @@ workflows:
           filters:
               branches:
                    only: master
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-          filters:
-            branches:
-              only: master
-      - run-migrations:
-          requires: [configure-infrastructure]
-          filters:
-            branches:
-              only: master
-      - deploy-frontend:
-          requires: [run-migrations]
-          filters:
-            branches:
-              only: master
-      - deploy-backend:
-          requires: [run-migrations] 
-          filters:
-            branches:
-              only: master
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-          filters:
-            branches:
-              only: master
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      #     filters:
+      #       branches:
+      #         only: master
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy-backend:
+      #     requires: [run-migrations] 
+      #     filters:
+      #       branches:
+      #         only: master
+      # - smoke-test:
+      #     requires: [deploy-backend, deploy-frontend]
+      #     filters:
+      #       branches:
+      #         only: master
     # triggers:
     #   - branch: master  
       # - cloudfront-update:
