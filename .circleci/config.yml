@@ -194,30 +194,30 @@ jobs:
       # Checkout code from gitaa
       - checkout
       - run: yum install -y tar gzip
-      - run: 
-          name: ensure env
-          command: |
-              echo "TYPEORM_ENTITIES: $TYPEORM_ENTITIES"
-      - run:
-          name: Ensure back-end infrastructure exists
-          command: |
-            echo $TYPEORM_ENTITIES
-            aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
-              --tags project=udapeople \
-              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-              # exit 1
-      - run:
-          name: Ensure front-end infrastructure exist
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
-              --tags project=udapeople \
-              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-            # aws cloudformation describe-stack-events --stack-name udapeople-frontend-0c9652d
-              # exit 1
+      # - run: 
+      #     name: ensure env
+      #     command: |
+      #         echo "TYPEORM_ENTITIES: $TYPEORM_ENTITIES"
+      # - run:
+      #     name: Ensure back-end infrastructure exists
+      #     command: |
+      #       echo $TYPEORM_ENTITIES
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/files/backend.yml \
+      #         --tags project=udapeople \
+      #         --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+      #         --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+      #         # exit 1
+      # - run:
+      #     name: Ensure front-end infrastructure exist
+      #     command: |
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/files/frontend.yml \
+      #         --tags project=udapeople \
+      #         --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+      #         --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+      #       # aws cloudformation describe-stack-events --stack-name udapeople-frontend-0c9652d
+      #         # exit 1
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -401,17 +401,17 @@ jobs:
       - run:
           name: Deploy
           command:  |
-            echo ENVIRONMENT=production >> "backend/.env"
-            echo NODE_ENV=production >> "backend/.env"
-            echo TYPEORM_CONNECTION=postgres >> "backend/.env"
-            echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> "backend/.env"
-            echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
-            echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> "backend/.env"
-            echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
-            echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
-            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
-            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
-            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
+            # echo ENVIRONMENT=production >> "backend/.env"
+            # echo NODE_ENV=production >> "backend/.env"
+            # echo TYPEORM_CONNECTION=postgres >> "backend/.env"
+            # echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> "backend/.env"
+            # echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
+            # echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> "backend/.env"
+            # echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
+            # echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
+            # echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
+            # echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
+            # echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
             cd backend
             npm i
             npm run build
@@ -559,15 +559,15 @@ workflows:
     #   - branch: devvsasaas
   deploy_workflow:
     jobs:
-      # - deploy-infrastructure:
-      #     filters:
-      #         branches:
-      #              only: master
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      #     filters:
-      #       branches:
-      #         only: master
+      - deploy-infrastructure:
+          filters:
+              branches:
+                   only: master
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+          filters:
+            branches:
+              only: master
       # - run-migrations:
       #     requires: [configure-infrastructure]
       #     filters:
@@ -579,12 +579,12 @@ workflows:
       #       branches:
       #         only: master
       - deploy-backend:
-          # requires: [run-migrations] 
+          requires: [configure-infrastructure] 
           filters:
             branches:
               only: master
       - smoke-test:
-          requires: deploy-backend
+          requires: [deploy-backend]
           filters:
             branches:
               only: master
