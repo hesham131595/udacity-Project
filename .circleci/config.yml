@@ -522,9 +522,7 @@ workflows:
   development_workflow:
     jobs:
       - build-frontend:
-<<<<<<< HEAD
       - build-backend:
-=======
           filters:
             branches:
               only: dev-branch
@@ -532,7 +530,6 @@ workflows:
           filters:
             branches:
               only: dev-branch
->>>>>>> dev
       - test-frontend:
           requires: [build-frontend]
           filters:
