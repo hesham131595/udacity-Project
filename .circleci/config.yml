@@ -559,8 +559,9 @@ workflows:
             - context: development-context
               filter:
                 success: true
-            - branches:
-                only: master
+            - filters:
+                branches:
+                   only: master
       - configure-infrastructure:
           requires: [deploy-infrastructure]
           filters:
