@@ -191,7 +191,7 @@ jobs:
       # Docker image here that supports AWS CLI heelo
       - image: amazon/aws-cli
     steps:
-      # Checkout code from git
+      # Checkout code from gitaa
       - checkout
       - run: yum install -y tar gzip
       - run:
