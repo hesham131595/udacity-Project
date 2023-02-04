@@ -6,8 +6,8 @@
 
 - name: Push and extract artifact
   unarchive:
-    src: ~/project/artifact.tar.gz
-    dest: /home/ubuntu/backend
+    src:  ~/project/artifact.tar.gz
+    dest:  /home/ubuntu/backend
 - name: "change directory to backend directory"
   shell: |
     cd /home/ubuntu/backend
