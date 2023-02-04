@@ -554,18 +554,36 @@ workflows:
     #   - branch: dev
   deploy_workflow:
     jobs:
-      - deploy-infrastructure
+      - deploy-infrastructure:
+          filters:
+            branches:
+              only: master
           # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
+          filters:
+            branches:
+              only: master
       - run-migrations:
           requires: [configure-infrastructure]
+          filters:
+            branches:
+              only: master
       - deploy-frontend:
           requires: [run-migrations]
+          filters:
+            branches:
+              only: master
       - deploy-backend:
           requires: [run-migrations] 
+          filters:
+            branches:
+              only: master
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
+          filters:
+            branches:
+              only: master
     # triggers:
     #   - branch: master  
       # - cloudfront-update:
