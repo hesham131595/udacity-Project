@@ -415,9 +415,9 @@ jobs:
             # cd backend
             # npm i
             # npm run build
-            # cd ..
-            # tar -C backend -czvf artifact.tar.gz .
-            # tar -tvf artifact.tar.gz
+            cd ..
+            tar -C backend -czvf artifact.tar.gz .
+            tar -tvf artifact.tar.gz
             printenv >> ./backend/.env
       - run:
           name: Deploy backend
