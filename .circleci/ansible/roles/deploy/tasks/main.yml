@@ -10,7 +10,7 @@
     dest:  /home/ubuntu/backend
 - name: "change directory to backend directory"
   shell: |
-    cd /home/ubuntu
+    cd /home/ubuntu/backend
     npm install
     npm audit fix 
     pm2 stop default
