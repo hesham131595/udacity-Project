@@ -415,7 +415,7 @@ jobs:
             # cd backend
             # npm i
             # npm run build
-            cd ..
+            # cd ..
             tar -C backend -czvf artifact.tar.gz .
             tar -tvf artifact.tar.gz
             printenv >> ./backend/.env
@@ -433,10 +433,10 @@ jobs:
             cat inventory.txt
             ansible-playbook -i ~/inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
-      - destroy-environment:
-          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
-          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      # - destroy-environment:
+      #     workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      # - revert-migrations:
+      #     workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
   smoke-test:
     docker:
       # Lightweight Docker image 
