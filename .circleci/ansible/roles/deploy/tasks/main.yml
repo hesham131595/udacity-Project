@@ -1,18 +1,32 @@
----
-- name: "Create backend directory"
-  file:
-    path: /home/ubuntu/backend
-    state: directory
+# # ---
+# # - name: "Create backend directory"
+# #   file:
+# #     path: /home/ubuntu/backend
+# #     state: directory
 
-- name: Push and extract artifact
-  unarchive:
-    src:  ~/project/artifact.tar.gz
-    dest:  /home/ubuntu/backend
-- name: "change directory to backend directory"
+# - name: Push and extract artifact
+#   unarchive:
+#     src:  ~/project/artifact.tar.gz
+#     dest:  /home/ubuntu
+# - name: "change directory to backend directory"
+#   shell: |
+#     cd /home/ubuntu/backend
+#     npm install
+#     npm audit fix 
+#     pm2 stop default
+#     pm2 start npm -- start
+- name: "synchronize backend files"
+  synchronize:
+    src: ../../backend
+    dest: /home/ubuntu
+    recursive: true
+- name: "build package"
   shell: |
     cd /home/ubuntu/backend
     npm install
-    npm audit fix 
-    pm2 stop default
-    pm2 start npm -- start
+    npm run build
+- name: "start server"
+  shell: |
+    cd /home/ubuntu/backend
+    pm2 start npm -- run "start:dev"
   
