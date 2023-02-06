@@ -367,7 +367,7 @@ jobs:
             # npm audit fix --force
             npm run build
             ls dist
-            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+            # tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # Here's where you will add some code to rollback on failure      
       # - destroy-environment:
@@ -418,7 +418,7 @@ jobs:
             # npm run build
             # cd ..
             tar -C backend -czvf artifact.tar.gz .
-            tar -tvf artifact.tar.gz
+            # tar -tvf artifact.tar.gz
             # printenv >> ./backend/.env
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
