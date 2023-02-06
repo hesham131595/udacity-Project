@@ -534,6 +534,16 @@ jobs:
       # Checkout code from git
       - checkout
       - run:
+          name: Install dependencies
+          command: |
+            # your code here
+            apk add --no-cache aws-cli
+            apk add --update ansible 
+            # apk add --no-cache aws-cli
+            # pip3 install awscli 
+            apk add --update tar gzip
+            apk add --update nodejs npm curl 
+      - run:
           name: Get old stack workflow id
           command: |
             # your code here
