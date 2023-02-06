@@ -547,13 +547,11 @@ jobs:
           name: Get old stack workflow id
           command: |
             # your code here
-            export OldWorkflowID=$(aws cloudformation \
-                     list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-                    --no-paginate --output text)
+            export OldWorkflowID=$(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --no-paginate --output text)
             echo OldWorkflowID: "${OldWorkflowID}"
             echo CIRCLE_WORKFLOW_ID: "${CIRCLE_WORKFLOW_ID:0:7}"
-            export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
-                      --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+            export STACKS=$(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+                      --stack-status-filter CREATE_COMPLETE --no-paginate --output text) 
             echo Stack names: "${STACKS[@]}"  
       - run:
           name: Remove old stacks and files
@@ -603,46 +601,46 @@ workflows:
     # context: development-context
     # triggers:
     #   - branch: devvsasaas
-  deploy_workflow:
-    jobs:
-      - deploy-infrastructure:
-          filters:
-              branches:
-                   only: master
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-          filters:
-            branches:
-              only: master
-      - run-migrations:
-          requires: [configure-infrastructure]
-          filters:
-            branches:
-              only: master
-      - deploy-frontend:
-          requires: [run-migrations]
-          filters:
-            branches:
-              only: master
-      - deploy-backend:
-          requires: [run-migrations] 
-          filters:
-            branches:
-              only: master
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-          filters:
-            branches:
-              only: master
-    # triggers:as
-    #   - branch: master  
-      - cloudfront-update:
-          requires: [smoke-test]
-          filters:
-            branches:
-              only: master
+  # deploy_workflow:
+  #   jobs:
+  #     - deploy-infrastructure:
+  #         filters:
+  #             branches:
+  #                  only: master
+  #     - configure-infrastructure:
+  #         requires: [deploy-infrastructure]
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - run-migrations:
+  #         requires: [configure-infrastructure]
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - deploy-frontend:
+  #         requires: [run-migrations]
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - deploy-backend:
+  #         requires: [run-migrations] 
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - smoke-test:
+  #         requires: [deploy-backend, deploy-frontend]
+  #         filters:
+  #           branches:
+  #             only: master
+  #   # triggers:as
+  #   #   - branch: master  
+  #     - cloudfront-update:
+  #         requires: [smoke-test]
+  #         filters:
+  #           branches:
+  #             only: master
       - cleanup:
-          requires: [cloudfront-update]
+          # requires: [cloudfront-update]
           filters:
             branches:
               only: master
