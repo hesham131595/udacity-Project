@@ -600,8 +600,8 @@ workflows:
     # context: development-context
     # triggers:
     #   - branch: devvsasaas
-  deploy_workflow:
-    jobs:
+  # deploy_workflow:
+    # jobs:
       - deploy-infrastructure:
           requires: [test-frontend, test-backtend, scan-backtend, scan-frontend]
           filters:
