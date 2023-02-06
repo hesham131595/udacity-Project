@@ -603,7 +603,7 @@ workflows:
   # deploy_workflow:
     # jobs:
       - deploy-infrastructure:
-          requires: [test-frontend, test-backtend, scan-backtend, scan-frontend]
+          requires: [test-frontend, test-backend, scan-backend, scan-frontend]
           filters:
               branches:
                    only: master
