@@ -4,17 +4,19 @@
     path: /home/ubuntu/backend
     state: directory
 
-- name: Push and extract artifact
+- name: "unarchive backend"
   unarchive:
-    src:  ~/project/artifact.tar.gz
+    src:   ~/project/artifact.tar.gz
     dest:  /home/ubuntu/backend
-- name: "change directory to backend directory"
+
+- name: "install pm2"
   shell: |
     cd /home/ubuntu/backend
     npm install
-    npm audit fix 
-    pm2 stop default
+    # npm audit fix 
+    npm run build
     pm2 start npm -- start
+
 # - name: "synchronize backend files"
 #   synchronize:
 #     src: ../../backend

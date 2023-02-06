@@ -39,4 +39,5 @@
   roles:
     # Your code here
     - configure-server
+    - configure-prometheus-exorter
     
