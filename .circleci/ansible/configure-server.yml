@@ -1,7 +1,7 @@
 ---
 
 - name: "configuration play." 
-  hosts: web
+  hosts: ubuntu
   user: ubuntu
   become: true
   become_method: sudo
@@ -12,18 +12,18 @@
     - ansible_host_key_checking: false
     - ansible_stdout_callback: yaml
 
-  pre_tasks:
-    - name: "wait 600 seconds for target connection to become reachable/usable."
-      # Your code here
-      ansible.builtin.wait_for_connection:
-          delay: 60
-          timeout: 60
-    - name: "install python for Ansible."
-      # Your code here
-      become: yes
-      apt: 
-        name: ["python3"]
-        state: latest
+  # pre_tasks:
+  #   - name: "wait 600 seconds for target connection to become reachable/usable."
+  #     # Your code here
+  #     ansible.builtin.wait_for_connection:
+  #         delay: 60
+  #         timeout: 60
+  #   - name: "install python for Ansible."
+  #     # Your code here
+  #     become: yes
+  #     apt: 
+  #       name: ["python3"]
+  #       state: latest
   # Get the environment variables from CircleCI and add to the EC2 instance
   environment:
     - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
