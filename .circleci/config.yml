@@ -418,7 +418,7 @@ jobs:
             # export API_URL="http://${BACKEND_IP}:3030"
             # export API_URL="http://${BACKEND_IP}:3030"
             export API_URL=`cat ~/backend_url.txt`
-            # echo "${API_URL}" >> frontend/.env
+            # echo API_URL=${API_URL} >> frontend/.env
             echo "${API_URL}"
             # cat frontend/.env
             cd frontend
