@@ -219,8 +219,8 @@ jobs:
             echo [web] > ~/inventory.txt
             BACKEND_IP=$(aws ec2 describe-instances --filters "Name=tag:project,Values=udapeople" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             # exit 1
-            echo $Backend_IP >> ~/inventory.txt
-            echo http://$Backend_IP:3030 > ~/backend_url.txt
+            echo $BACKEND_IP >> ~/inventory.txt
+            echo http://$BACKEND_IP:3030 > ~/backend_url.txt
             cat ~/inventory.txt
       - persist_to_workspace:
           root: ~/
