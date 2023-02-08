@@ -617,7 +617,7 @@ workflows:
       #       branches:
       #         only: master
       - cleanup:
-          requires: [deploy-infrastructure]
+          # requires: [deploy-infrastructure]
           filters:
             branches:
               only: master
