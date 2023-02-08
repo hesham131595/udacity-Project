@@ -4,37 +4,6 @@ orbs:
   # Declare a dependency on the welcome-orb
   # welcome: circleci/welcome-orb@0.4.1
   aws-cli: circleci/aws-cli@2.0.3
-# commands:
-#   destroy-environment:
-#     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-#     parameters:
-#       # Add parameter here   
-#     steps:
-#       - run:
-#           name: Destroy environments
-#           when: on_fail
-#           command: |
-#             # Your code here
-#             exit 1
-
-#   revert-migrations:
-#     description: Revert the last migration if successfully run in the current workflow.
-#     parameters:
-#       # Add parameter here     dw
-#     steps:
-#       - run:
-#           name: Revert migrations
-#           # Add when this will run
-#           command: |
-#             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-#             SUCCESS = 1
-#             if(( $SUCCESS==1 )); 
-#             then
-#             #  cd ~/project/backend
-#             #  npm install
-#             #  Add revert code here. You can find this in the Getting Started section.
-#               exit 1
-#             fi
 commands:
       destroy-environment:
         description: Destroy backend and frontend cloudformation stacks given a workflow ID.
@@ -322,51 +291,7 @@ jobs:
       #     workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       # - revert-migrations:
       #     workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-  # deploy-frontend:
-  #   docker:
-  #     # Docker image here that supports AWS CLI
-  #     - image: python:3.9-alpine3.16
-  
-  #   steps:
-  #     # Checkout code from git
-  #     - checkout
-  #     # - attach_workspace:
-  #     #       at: ~/
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           # your code here
-  #           apk add --update ansible 
-  #           # apk add --no-cache aws-cli
-  #           pip3 install awscli 
-  #           apk add --update tar gzip
-  #           apk add --update nodejs npm curl
-  #     - run:
-  #         name: Get backend url
-  #         command: |
-  #           # your code here
-  #           export BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-  #           # export API_URL="http://${BACKEND_IP}:3030"
-  #           export API_URL="http://${BACKEND_IP}:3030"
-  #           echo "API_URL=${API_URL}" >> frontend/.env
-  #           cat frontend/.env
-  #     - run:
-  #         name: Deploy frontend objects
-  #         command: |
-  #           # your code here
-  #           cd frontend
-  #           npm install
-  #           # npm audit fix
-  #           # npm audit fix --force
-  #           npm run build
-  #           ls dist
-  #           # tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-  #           aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      # Here's where you will add some code to rollback on failure      
-      # - destroy-environment:
-      #     workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-      # - revert-migrations:
-      #     workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"            
+         
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
@@ -593,8 +518,6 @@ jobs:
             # your code here
             apk add --no-cache aws-cli
             apk add --update ansible 
-            # apk add --no-cache aws-cli
-            # pip3 install awscli 
             apk add --update tar gzip
             apk add --update nodejs npm curl 
       - run:
@@ -661,40 +584,40 @@ workflows:
           filters:
               branches:
                    only: master
-      - configure-infrastructure:
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      #     filters:
+      #       branches:
+      #         only: master
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy-backend:
+      #     requires: [run-migrations] 
+      #     filters:
+      #       branches:
+      #         only: master
+      # - smoke-test:
+      #     requires: [deploy-backend, deploy-frontend]
+      #     filters:
+      #       branches:
+      #         only: master
+    # triggers:as
+    #   - branch: master  
+      # - cloudfront-update:
+      #     requires: [smoke-test]
+      #     filters:
+      #       branches:
+      #         only: master
+      - cleanup:
           requires: [deploy-infrastructure]
           filters:
             branches:
               only: master
-      - run-migrations:
-          requires: [configure-infrastructure]
-          filters:
-            branches:
-              only: master
-      - deploy-frontend:
-          requires: [run-migrations]
-          filters:
-            branches:
-              only: master
-      - deploy-backend:
-          requires: [run-migrations] 
-          filters:
-            branches:
-              only: master
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-          filters:
-            branches:
-              only: master
-    # triggers:as
-    #   - branch: master  
-      - cloudfront-update:
-          requires: [smoke-test]
-          filters:
-            branches:
-              only: master
-      # - cleanup:
-      #     requires: [cloudfront-update]
-      #     filters:
-      #       branches:
-      #         only: master
