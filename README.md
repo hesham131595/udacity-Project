@@ -40,7 +40,8 @@ Surface critical server errors for diagnosis using centralized structured loggin
 - You’re going to add an alert so that botched builds raise a nice wavy red flag.
 - CircleCI has auto-enabled the email notification for all failed builds.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/b3685ee2-309e-428a-a190-1785d281f1ab/Untitled.png)
+![image](https://github.com/hesham131595/udacity-Project/assets/93712347/0752f7d9-de16-48a7-b88d-5f81b8b71675)
+
 
 6. Setup - AWS
 
@@ -96,7 +97,8 @@ TYPEORM_DATABASE=postgres {or your postgres database name in RDS}
 ENVIRONMENT=production
 ```
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/804539c7-28b0-4927-91d9-a91439122316/Untitled.png)
+![image](https://github.com/hesham131595/udacity-Project/assets/93712347/cd0cb002-9d72-4c90-a5f0-53df7a14bc05)
+
 
 9- **Deploy the pipeline**
 
