@@ -1,64 +1,115 @@
-We are archiving this repository because we do not want learners to push personal development to the current repository. If you have any issues or suggestions to make, feel free to:
-- Utilize the https://knowledge.udacity.com/ forum to seek help on content-specific issues.
-- [Submit a support ticket](https://udacity.zendesk.com/hc/en-us/requests/new) along with the link to your forked repository. 
-- If you are an enterprise learner, please [Submit a support ticket here](https://udacityenterprise.zendesk.com/hc/en-us/requests/new?ticket_form_id=360000279131)
+# Udacity-Project
 
-## Give your Application Auto-Deploy Superpowers
-
-In this project, you will prove your mastery of the following learning objectives:
+# I deployed an app to AWS with CircleCI and Ansible. Below are the main goals of the project:
 
 - Explain the fundamentals and benefits of CI/CD to achieve, build, and deploy automation for cloud-based software products.
 - Utilize Deployment Strategies to design and build CI/CD pipelines that support Continuous Delivery processes.
 - Utilize a configuration management tool to accomplish deployment to cloud-based servers.
-- Surface critical server errors for diagnosis using centralized structured logging.
+Surface critical server errors for diagnosis using centralized structured logging.
 
-![Diagram of CI/CD Pipeline we will be building.](udapeople.png)
+# **Dependencies**
 
-### Instructions
+- Circle CI - Cloud-based CI/CD service
+- Amazon AWS - Cloud services
+- AWS CLI - Command-line tool for AWS
+- CloudFormation - Infrastrcuture as code
+- Ansible - Configuration management tool
+- Prometheus - Monitoring tool
 
-* [Selling CI/CD](instructions/0-selling-cicd.md)
-* [Getting Started](instructions/1-getting-started.md)
-* [Deploying Working, Trustworthy Software](instructions/2-deploying-trustworthy-code.md)
-* [Configuration Management](instructions/3-configuration-management.md)
-* [Turn Errors into Sirens](instructions/4-turn-errors-into-sirens.md)
+# **Project Steps**
 
-### Project Submission
+1- Create new project in circleci using the github repo
 
-For your submission, please submit the following:
+2- **build phase**:
 
-- A text file named `urls.txt` including:
-  1. Public Url to GitHub repository (not private) [URL01]
-  1. Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]
-  1. Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]
-  1. Public URLs to deployed application back-end in EC2 [URL04]
-  1. Public URL to your Prometheus Server [URL05]
-- Your screenshots in JPG or PNG format, named using the screenshot number listed in the instructions. These screenshots should be included in your code repository in the root folder.
-  1. Job failed because of compile errors. [SCREENSHOT01]
-  1. Job failed because of unit tests. [SCREENSHOT02]
-  1. Job that failed because of vulnerable packages. [SCREENSHOT03]
-  1. An alert from one of your failed builds. [SCREENSHOT04]
-  1. Appropriate job failure for infrastructure creation. [SCREENSHOT05]
-  1. Appropriate job failure for the smoke test job. [SCREENSHOT06]
-  1. Successful rollback after a failed smoke test. [SCREENSHOT07]  
-  1. Successful promotion job. [SCREENSHOT08]
-  1. Successful cleanup job. [SCREENSHOT09]
-  1. Only deploy on pushed to `master` branch. [SCREENSHOT10]
-  1. Provide a screenshot of a graph of your EC2 instance including available memory, available disk space, and CPU usage. [SCREENSHOT11]
-  1. Provide a screenshot of an alert that was sent by Prometheus. [SCREENSHOT12]
+- The goal of a build phase is to compile the source code to check for syntax errors or unintentional typos in code.
+- using config.yaml in .circleci  you can add build-frontend and build-backend only in workflow part.
 
-- Your presentation should be in PDF format named "presentation.pdf" and should be included in your code repository root folder. 
+3- **Test phase**:
 
-Before you submit your project, please check your work against the project rubric. If you haven’t satisfied each criterion in the rubric, then revise your work so that you have met all the requirements. 
+- Unit tests are one of the many very important building blocks of a system that enables Continuous Delivery.
+- using config.yaml in .circleci  you can add test-frontend and test-backend in workflow part.
 
-### Built With
+4- **Analyze Phase**
 
-- [Circle CI](www.circleci.com) - Cloud-based CI/CD service
-- [Amazon AWS](https://aws.amazon.com/) - Cloud services
-- [AWS CLI](https://aws.amazon.com/cli/) - Command-line tool for AWS
-- [CloudFormation](https://aws.amazon.com/cloudformation/) - Infrastrcuture as code
-- [Ansible](https://www.ansible.com/) - Configuration management tool
-- [Prometheus](https://prometheus.io/) - Monitoring tool
+- checks for known vulnerabilities every time we check in new code
+- using config.yaml in .circleci  you can add scan-frontend and scan-backend in workflow part.
 
-### License
+5- **Alerts**
 
-[License](LICENSE.md)
+- You’re going to add an alert so that botched builds raise a nice wavy red flag.
+- CircleCI has auto-enabled the email notification for all failed builds.
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/b3685ee2-309e-428a-a190-1785d281f1ab/Untitled.png)
+
+6. Setup - AWS
+
+- Create and download a new key pair in AWS EC2. Name this key pair "udacity" so that it works with the Cloud Formation templates.
+- Create IAM user for programmatic access only and copy the access key id and secret access key. You'll also need these credentials to add to CircleCI configuration in the next steps
+- Add a PostgreSQL database in RDS that has public accessibility. As long as you marked "Public Accessibility" as "yes", you won't need to worry about VPC settings or security groups. Take note of the connection details, such as:
+
+```docker
+Endpoint (Hostname): database-1.ch4a9dhlinpw.us-east-1.rds.amazonaws.com
+Instance identifier: database-1 //This is not the database name
+Database name: postgres (default)
+Username: postgres
+Password: mypassword
+Port: 5432
+```
+
+7- ****Setup - CloudFront Distribution Primer****
+
+- At the very end of the pipeline, you will need to make a switch from the old infrastructure to the new, so we will use CloudFormation and CloudFront to accomplish this. However, for this to work, you must do a few things manually
+- Create a **public** S3 bucket with a name that combines "udapeople" and the random string, such as `udapeople-kk1j287dhjppmz437`. If S3 complains that the name is already taken, just choose another random string.
+- Manually run the provided **[.circleci/files/cloudfront.yml](https://github.com/udacity/cdond-c3-projectstarter/blob/master/.circleci/files/cloudfront.yml)** template file locally, and use bucket name for the Workflow ID parameter, as shown in the example command below. In the template file, the Workflow ID parameter represents the bucket name.
+
+```docker
+cd .circleci/files
+aws cloudformation deploy \
+            --template-file cloudfront.yml \
+            --stack-name InitialStack\
+            --parameter-overrides WorkflowID=udapeople-kk1j287dhjppmz437
+```
+
+- Upon successful execution, the *cloudfront.yml* template file will create a CloudFront Distribution connected to your existing S3 bucket, and a CloudFrontOriginAccessIdentity
+
+8-  **Configure - CircleCI**
+
+- Add the SSH key (`*.pem`) to CircleCI.
+- Add the environment variables to CircleCI by navigating to {project name} > Settings > Environment Variables.
+
+```docker
+RUN_ID=asdfghj #random string
+AWS_ACCESS_KEY_ID=(from IAM user with programmatic access)
+AWS_SECRET_ACCESS_KEY= (from IAM user with programmatic access)
+AWS_SESSION_TOKEN= (from IAM user with programmatic access)
+AWS_DEFAULT_REGION=(your default region in aws)
+TYPEORM_CONNECTION=postgres
+TYPEORM_MIGRATIONS_DIR=./src/migrations
+TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
+TYPEORM_MIGRATIONS=./src/migrations/*.ts
+TYPEORM_HOST={your postgres database hostname in RDS}
+TYPEORM_PORT=5432 (or the port from RDS if it’s different)
+TYPEORM_USERNAME={your postgres database username in RDS}
+TYPEORM_PASSWORD={your postgres database password in RDS}
+TYPEORM_DATABASE=postgres {or your postgres database name in RDS}
+ENVIRONMENT=production
+```
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/804539c7-28b0-4927-91d9-a91439122316/Untitled.png)
+
+9- **Deploy the pipeline**
+
+- build triggered by a non-master commit. It should only run the jobs prior to deployment
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/35e36dc7-59d5-4b80-a2b0-1133f1678275/Untitled.png)
+
+- build triggered by a master commit. It should only run the jobs prior to deployment
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/2ef8ce10-f4fb-4c9a-b2a5-154509cd233c/Untitled.png)
+
+- The app allows you to add new employees. The frontend URL can be obtained through S3 and CloudFront. The backend URL can be seen through EC2.
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/7d8c8a9d-44d0-452e-998d-1899d372e8ac/Untitled.png)
+
+10- **Configure alerts in Prometheus**
