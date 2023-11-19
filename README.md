@@ -104,14 +104,19 @@ ENVIRONMENT=production
 
 - build triggered by a non-master commit. It should only run the jobs prior to deployment
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/35e36dc7-59d5-4b80-a2b0-1133f1678275/Untitled.png)
+![image](https://github.com/hesham131595/udacity-Project/assets/93712347/e5942469-5870-420b-b674-80f19cf54d1c)
+
 
 - build triggered by a master commit. It should only run the jobs prior to deployment
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/2ef8ce10-f4fb-4c9a-b2a5-154509cd233c/Untitled.png)
+![image](https://github.com/hesham131595/udacity-Project/assets/93712347/b1dcb716-eae1-4f1d-8d18-6e031ea7d75c)
+
 
 - The app allows you to add new employees. The frontend URL can be obtained through S3 and CloudFront. The backend URL can be seen through EC2.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/4a092e43-3707-436e-b8f5-b7a38e8388b0/7d8c8a9d-44d0-452e-998d-1899d372e8ac/Untitled.png)
+![image](https://github.com/hesham131595/udacity-Project/assets/93712347/710407ec-9c8d-48b1-9615-7077fdfc8be3)
+
 
 10- **Configure alerts in Prometheus**
+![image](https://github.com/hesham131595/udacity-Project/assets/93712347/c1ab30fc-1667-4739-a8d0-9e87f4f4cd61)
+
