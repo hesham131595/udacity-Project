@@ -40,7 +40,10 @@ Surface critical server errors for diagnosis using centralized structured loggin
 - You’re going to add an alert so that botched builds raise a nice wavy red flag.
 - CircleCI has auto-enabled the email notification for all failed builds.
 
-![image](https://github.com/hesham131595/udacity-Project/assets/93712347/0752f7d9-de16-48a7-b88d-5f81b8b71675)
+- ![image](https://github.com/hesham131595/udacity-Project-Deploy-an-Application-to-AWS-with-CircleCI-and-Ansible/assets/93712347/ac602e72-a30f-47da-9a72-c038d13ff513)
+
+
+
 
 
 6. Setup - AWS
